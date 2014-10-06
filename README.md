@@ -3,6 +3,10 @@ dev
 
 Make Private The Configuration Data You Don't Want To Commit
 
+nuget : Install-Package ConfigJson
+
+https://www.nuget.org/packages/ConfigJson/
+
 
 For more info check the unit tests here :
 
