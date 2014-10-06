@@ -1,8 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ConfigJson.NET.Test
+namespace ConfigJsonNET.Test
 {
     [TestClass]
     public class when_ConfigJson_is_used
@@ -19,7 +19,7 @@ namespace ConfigJson.NET.Test
         public void it_should_have_the_following_characteristics()
         {
             //this is the default location where files are saved. you can change that
-            // the app file is stored in application root directory, you cant change that. Or can you?
+            // the app file is stored in application root directory, you cant change that. Or can you? yes you can
             Assert.AreEqual(MyConfigurationObject.Config.Advanced.ConfigLocation, @"C:\Users\");
 
             // by default it doesnt run in memory

@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using CuttingEdge.Conditions;
-using Newtonsoft.Json;
 
-namespace ConfigJson.NET.ConfigurationHelper
+namespace ConfigJsonNET.ConfigurationHelper
 {
     public  class PersistedConfiguration<T> where T : new()
     {

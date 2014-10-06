@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ConfigJson.NET.ConfigurationHelper
+namespace ConfigJsonNET.ConfigurationHelper
 {
     public abstract class IConfigurationModuleFileHandler
     {

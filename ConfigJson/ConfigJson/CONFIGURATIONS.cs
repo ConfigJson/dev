@@ -1,9 +1,8 @@
-﻿using ConfigJson.NET.ConfigurationHelper;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
+using ConfigJsonNET.ConfigurationHelper;
 
-namespace ConfigJson.NET
+namespace ConfigJsonNET
 {
     /// <summary>
     /// The name of the class that implements CONFIGURATION will be the name by which configuration data will be accessed

@@ -1,4 +1,4 @@
-﻿namespace ConfigJson.NET.ConfigurationHelper
+﻿namespace ConfigJsonNET.ConfigurationHelper
 {
     public class SetUpFile
     {

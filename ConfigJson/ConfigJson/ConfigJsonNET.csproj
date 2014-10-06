@@ -7,8 +7,8 @@
     <ProjectGuid>{118A8D2B-15F2-429A-9362-E69405DD2201}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ConfigJson.NET</RootNamespace>
-    <AssemblyName>ConfigJson.NET</AssemblyName>
+    <RootNamespace>ConfigJsonNET</RootNamespace>
+    <AssemblyName>ConfigJsonNET</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

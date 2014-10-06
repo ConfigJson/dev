@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigJson.NET", "ConfigJson\ConfigJson.NET.csproj", "{118A8D2B-15F2-429A-9362-E69405DD2201}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigJsonNET", "ConfigJson\ConfigJsonNET.csproj", "{118A8D2B-15F2-429A-9362-E69405DD2201}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigJson.NET.Test", "ConfigJson.NET.Test\ConfigJson.NET.Test.csproj", "{D247875E-A11E-47C4-8C58-ABAA5B47217B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigJsonNET.Test", "ConfigJson.NET.Test\ConfigJsonNET.Test.csproj", "{D247875E-A11E-47C4-8C58-ABAA5B47217B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

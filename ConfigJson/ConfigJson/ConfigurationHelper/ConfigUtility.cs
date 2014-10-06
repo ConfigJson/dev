@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using CuttingEdge.Conditions;
 
-namespace ConfigJson.NET.ConfigurationHelper
+namespace ConfigJsonNET.ConfigurationHelper
 {
     public static class AppUtility
     {

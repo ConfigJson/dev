@@ -2,7 +2,7 @@
 using System.IO;
 using Newtonsoft.Json;
 
-namespace ConfigJson.NET.ConfigurationHelper
+namespace ConfigJsonNET.ConfigurationHelper
 {
     public class ConfigurationModuleFileHandler : IConfigurationModuleFileHandler
     {
