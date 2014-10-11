@@ -2,11 +2,12 @@
 {
     public class SetUpFile
     {
-
         public string BaseDir { set; get; }
 
         public string FileName { set; get; }
 
         public bool IsActive { set; get; }
+
+        public string Selector { set; get; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Newtonsoft.Json;
+using System.Text;
+
 
 namespace ConfigJsonNET.ConfigurationHelper
 {
@@ -10,11 +11,82 @@ namespace ConfigJsonNET.ConfigurationHelper
         {
             InMemoryFileSystem=new Dictionary<string, string>();
         }
+        /// <summary>
+        /// Adds indentation and line breaks to output of JavaScriptSerializer
+        /// </summary>
+        public override string FormatJson(string jsonString)
+        {
+            var stringBuilder = new StringBuilder();
 
-        internal override Dictionary<string, string> InMemoryFileSystem { get; set; }
+            var escaping = false;
+            var inQuotes = false;
+            var indentation = 0;
+
+            foreach (var character in jsonString)
+            {
+                if (escaping)
+                {
+                    escaping = false;
+                    stringBuilder.Append(character);
+                }
+                else
+                {
+                    switch (character)
+                    {
+                        case '\\':
+                            escaping = true;
+                            stringBuilder.Append(character);
+                            break;
+                        case '\"':
+                            inQuotes = !inQuotes;
+                            stringBuilder.Append(character);
+                            break;
+                        default:
+                            if (!inQuotes)
+                            {
+                                if (character == ',')
+                                {
+                                    stringBuilder.Append(character);
+                                    stringBuilder.Append("\r\n");
+                                    stringBuilder.Append('\t', indentation);
+                                }
+                                else if (character == '[' || character == '{')
+                                {
+                                    stringBuilder.Append(character);
+                                    stringBuilder.Append("\r\n");
+                                    stringBuilder.Append('\t', ++indentation);
+                                }
+                                else if (character == ']' || character == '}')
+                                {
+                                    stringBuilder.Append("\r\n");
+                                    stringBuilder.Append('\t', --indentation);
+                                    stringBuilder.Append(character);
+                                }
+                                else if (character == ':')
+                                {
+                                    stringBuilder.Append(character);
+                                    stringBuilder.Append('\t');
+                                }
+                                else
+                                {
+                                    stringBuilder.Append(character);
+                                }
+                            }
+                            else
+                            {
+                                stringBuilder.Append(character);
+                            }
+                            break;
+                    }
+                }
+            }
+
+            return stringBuilder.ToString();
+        }
+        internal override sealed Dictionary<string, string> InMemoryFileSystem { get; set; }
         internal override bool RunInMemory { get; set; }
         internal override bool AllowOverwrite { get; set; }
-
+        internal override string Selector { get; set; }
         public override void WriteAllText(string fileName, string content)
         {
             if (Exists(fileName) && !AllowOverwrite)
@@ -40,17 +112,14 @@ namespace ConfigJsonNET.ConfigurationHelper
 
         public override string ReadAllText(string fileName)
         {
-            if (RunInMemory)
+            if (!RunInMemory) return File.ReadAllText(fileName);
+            if (!InMemoryFileSystem.ContainsKey(fileName))
             {
-                if (!InMemoryFileSystem.ContainsKey(fileName))
-                {
-                    throw new FileNotFoundException(fileName);
-                }
-
-
-                return InMemoryFileSystem[fileName];
+                throw new FileNotFoundException(fileName);
             }
-            return   File.ReadAllText(fileName);
+
+
+            return InMemoryFileSystem[fileName];
         }
 
         public override bool Exists(string fileName)
@@ -65,12 +134,15 @@ namespace ConfigJsonNET.ConfigurationHelper
 
         public override string JsonConvertSerializeObject<T>(T data)
         {
-            return JsonConvert.SerializeObject(data, Formatting.Indented);
+            return FormatJson(new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(data)) ;
+          //  return JsonConvert.SerializeObject(data, Formatting.Indented);
         }
 
         public override T JsonConvertDeSerialize<T>(string data)
         {
-            return JsonConvert.DeserializeObject<T>(data);
+            return  new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<T>(data);
+       
+            //  return JsonConvert.DeserializeObject<T>(data);
         }
     }
 }
