@@ -36,7 +36,7 @@ namespace ConfigJsonNET.ConfigurationHelper
                 get
                 {
                     CheckAndUpdateFileHandler();
-                    return AppUtility.GetFirstActiveConfig();
+                    return AppUtility.GetFirstActiveConfig<T>();
                 }
             }
 
@@ -87,7 +87,7 @@ namespace ConfigJsonNET.ConfigurationHelper
                 set
                 {
                     CheckAndUpdateFileHandler();
-                    var activeConfig = AppUtility.GetFirstActiveConfig();
+                    var activeConfig = AppUtility.GetFirstActiveConfig<T>();
                     var activeFileName = activeConfig.FileName;
                     var baseDir = activeConfig.BaseDir;
 

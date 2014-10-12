@@ -18,10 +18,11 @@ namespace ConfigJsonNET
 
         internal static string BaseDir = AppDomain.CurrentDomain.BaseDirectory;
 
-        internal static string SetUpFile = @"app.config.json";
-        internal static string DebugConfigFile = @"debug.config.json";
-        internal static string ReleaseConfigFile = @"release.config.json";
+        internal static string SetUpFile = @"app.config." + typeof(T).FullName + ".json";
+        internal static string DebugConfigFile = @"debug.config." + typeof(T).FullName + ".json";
+        internal static string ReleaseConfigFile = @"release.config." + typeof(T).FullName + ".json";
         internal static string PathToSetupFile = BaseDir + "\\" + SetUpFile;
+       
 
         internal static List<SetUpFile> InitialSetUpFileObject = new List<SetUpFile>
         {

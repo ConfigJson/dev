@@ -43,6 +43,7 @@ namespace ConfigJsonNET.ConfigurationHelper
 
             if (!FileHandler.Exists(file))
             {
+              
                 Persist(init, file);
             }
         }
@@ -51,7 +52,7 @@ namespace ConfigJsonNET.ConfigurationHelper
 
         public static T LoadAppConfiguration<T>() where T : new()
         {
-            var firstActiveConfig = GetFirstActiveConfig();
+            var firstActiveConfig = GetFirstActiveConfig<T>();
             AppConfigLocation = firstActiveConfig.FileName;
 
             if (string.IsNullOrEmpty(firstActiveConfig.BaseDir)) throw new Exception("MissingBase Dir");
@@ -64,9 +65,9 @@ namespace ConfigJsonNET.ConfigurationHelper
             return InitializeConfig(firstActiveConfig.BaseDir + AppConfigLocation, new T());
         }
 
-        internal static SetUpFile GetFirstActiveConfig()
+        internal static SetUpFile GetFirstActiveConfig<T>() where T : new()
         {
-            var setupFileConfigs = InitializeConfig(ConfigJson<dynamic>.PathToSetupFile, ConfigJson<dynamic>.InitialSetUpFileObject);
+            var setupFileConfigs = InitializeConfig(ConfigJson<T>.PathToSetupFile, ConfigJson<T>.InitialSetUpFileObject);
 
             var firstActiveConfig = string.IsNullOrEmpty(FileHandler.Selector) ? setupFileConfigs.FindAll(x => x.IsActive).FirstOrDefault() : setupFileConfigs.FindAll(x => x.Selector == FileHandler.Selector).FirstOrDefault();
 

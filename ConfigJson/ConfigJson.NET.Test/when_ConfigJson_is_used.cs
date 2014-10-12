@@ -33,7 +33,7 @@ namespace ConfigJsonNET.Test
             // by default, selection of config file is determined by the first active one rather than selected based on a selector
             Assert.AreEqual(MyConfigurationObject.Config.Advanced.Selector, null);
 
-            Assert.AreEqual(MyConfigurationObject.Config.Advanced.CurrentSelection.FileName, @"debug.config.json");
+            Assert.AreEqual(MyConfigurationObject.Config.Advanced.CurrentSelection.FileName, @"debug.config.ConfigJsonNET.Test.SampleConfigClass.json");
             Assert.AreEqual(MyConfigurationObject.Config.Advanced.CurrentSelection.BaseDir, expectedDefaultBaseDir);
             Assert.AreEqual(MyConfigurationObject.Config.Advanced.CurrentSelection.IsActive, true);
             Assert.AreEqual(MyConfigurationObject.Config.Advanced.CurrentSelection.Selector, "debug");
@@ -41,7 +41,7 @@ namespace ConfigJsonNET.Test
             // lets select the second listing instead. this will override the selection based on what is active
             MyConfigurationObject.Config.Advanced.Selector = "release";
 
-            Assert.AreEqual(MyConfigurationObject.Config.Advanced.CurrentSelection.FileName, @"release.config.json");
+            Assert.AreEqual(MyConfigurationObject.Config.Advanced.CurrentSelection.FileName, @"release.config.ConfigJsonNET.Test.SampleConfigClass.json");
             Assert.AreEqual(MyConfigurationObject.Config.Advanced.CurrentSelection.BaseDir, expectedDefaultBaseDir);
             Assert.AreEqual(MyConfigurationObject.Config.Advanced.CurrentSelection.IsActive, false);
             Assert.AreEqual(MyConfigurationObject.Config.Advanced.CurrentSelection.Selector, "release");
