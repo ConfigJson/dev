@@ -51,6 +51,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="MyConfigurationObject1.cs" />
+    <Compile Include="MyConfigurationObject2.cs" />
+    <Compile Include="MyConfigurationObject3.cs" />
     <Compile Include="SampleConfigClass.cs" />
     <Compile Include="SomeClass.cs" />
     <Compile Include="when_ConfigJson_is_used.cs" />

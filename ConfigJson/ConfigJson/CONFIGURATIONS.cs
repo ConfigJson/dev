@@ -46,10 +46,7 @@ namespace ConfigJsonNET
 
         public static T Data
         {
-            get
-            {
-                return Config.Data;
-            }
+            get { return Config.Data; }
         }
     }
 }

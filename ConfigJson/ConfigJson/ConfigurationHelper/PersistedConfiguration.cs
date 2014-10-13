@@ -5,11 +5,16 @@ namespace ConfigJsonNET.ConfigurationHelper
 {
     public class PersistedConfiguration<T> where T : new()
     {
+        public PersistedConfiguration()
+        {
+            CheckAndUpdateFileHandler();
+        }
+
         internal static string _ConfigLocation = @"C:\Users\";
 
         public T InitialConfigurationLoaded { set; get; }
 
-        public static IConfigurationModuleFileHandler FileHandler = new ConfigurationModuleFileHandler();
+        public static IConfigurationModuleFileHandler FileHandler = new ConfigurationModuleFileHandler<T>();
         public _Advanced Advanced = new _Advanced();
 
         public class _Advanced
@@ -35,8 +40,19 @@ namespace ConfigJsonNET.ConfigurationHelper
             {
                 get
                 {
-                    CheckAndUpdateFileHandler();
+                    //   CheckAndUpdateFileHandler();
                     return AppUtility.GetFirstActiveConfig<T>();
+                }
+            }
+
+
+           public string   SetUpFile
+            {
+               
+                get
+                {
+                    //  CheckAndUpdateFileHandler();
+                    return AppUtility.FileHandler.SetUpFiles[typeof(T).FullName];
                 }
             }
 
@@ -44,13 +60,14 @@ namespace ConfigJsonNET.ConfigurationHelper
             {
                 set
                 {
-                    CheckAndUpdateFileHandler();
-                    AppUtility.FileHandler.Selector = value;
+                    //  CheckAndUpdateFileHandler();
+
+                    AppUtility.FileHandler.Selector[typeof(T).FullName] = value;
                 }
                 get
                 {
-                    CheckAndUpdateFileHandler();
-                    return AppUtility.FileHandler.Selector;
+                    //  CheckAndUpdateFileHandler();
+                    return AppUtility.FileHandler.Selector[typeof(T).FullName];
                 }
             }
 
@@ -58,13 +75,13 @@ namespace ConfigJsonNET.ConfigurationHelper
             {
                 set
                 {
-                    CheckAndUpdateFileHandler();
-                    AppUtility.FileHandler.AllowOverwrite = value;
+                    // CheckAndUpdateFileHandler();
+                    AppUtility.FileHandler.AllowOverwrite[typeof(T).FullName] = value;
                 }
                 get
                 {
-                    CheckAndUpdateFileHandler();
-                    return AppUtility.FileHandler.AllowOverwrite;
+                    // CheckAndUpdateFileHandler();
+                    return AppUtility.FileHandler.AllowOverwrite[typeof(T).FullName];
                 }
             }
 
@@ -72,13 +89,13 @@ namespace ConfigJsonNET.ConfigurationHelper
             {
                 set
                 {
-                    CheckAndUpdateFileHandler();
-                    AppUtility.FileHandler.RunInMemory = value;
+                    //   CheckAndUpdateFileHandler();
+                    AppUtility.FileHandler.RunInMemory[typeof(T).FullName] = value;
                 }
                 get
                 {
-                    CheckAndUpdateFileHandler();
-                    return AppUtility.FileHandler.RunInMemory;
+                    //  CheckAndUpdateFileHandler();
+                    return AppUtility.FileHandler.RunInMemory[typeof(T).FullName];
                 }
             }
 
@@ -86,13 +103,22 @@ namespace ConfigJsonNET.ConfigurationHelper
             {
                 set
                 {
-                    CheckAndUpdateFileHandler();
+                    //   CheckAndUpdateFileHandler();
                     var activeConfig = AppUtility.GetFirstActiveConfig<T>();
                     var activeFileName = activeConfig.FileName;
                     var baseDir = activeConfig.BaseDir;
 
-                    AppUtility.Persist(AppUtility.CopyObject(value), baseDir + activeFileName);
+                    AppUtility.Persist(AppUtility.CopyObject(value), baseDir + activeFileName, typeof(T).FullName);
                 }
+            }
+        }
+
+        internal T Data
+        {
+            get
+            {
+                //  CheckAndUpdateFileHandler();
+                return AppUtility.LoadAppConfiguration<T>();
             }
         }
 
@@ -104,14 +130,32 @@ namespace ConfigJsonNET.ConfigurationHelper
 
                 AppUtility.FileHandler = FileHandler;
             }
-        }
 
-        internal T Data
-        {
-            get
+            AppUtility.FileHandler.RunInMemory = AppUtility.FileHandler.RunInMemory ??
+                                                               new Dictionary<string, bool>();
+
+            AppUtility.FileHandler.AllowOverwrite = AppUtility.FileHandler.AllowOverwrite ?? new Dictionary<string, bool>();
+
+            AppUtility.FileHandler.Selector = AppUtility.FileHandler.Selector ?? new Dictionary<string, string>();
+            AppUtility.FileHandler.SetUpFiles = AppUtility.FileHandler.SetUpFiles ?? new Dictionary<string, string>();
+            if (!AppUtility.FileHandler.RunInMemory.ContainsKey(typeof(T).FullName))
             {
-                CheckAndUpdateFileHandler();
-                return AppUtility.LoadAppConfiguration<T>();
+                AppUtility.FileHandler.RunInMemory[typeof(T).FullName] = false;
+            }
+
+            if (!AppUtility.FileHandler.AllowOverwrite.ContainsKey(typeof(T).FullName))
+            {
+                AppUtility.FileHandler.AllowOverwrite[typeof(T).FullName] = false;
+            }
+
+            if (!AppUtility.FileHandler.Selector.ContainsKey(typeof(T).FullName))
+            {
+                AppUtility.FileHandler.Selector[typeof(T).FullName] = null;
+            }
+
+            if (!AppUtility.FileHandler.SetUpFiles.ContainsKey(typeof(T).FullName))
+            {
+                AppUtility.FileHandler.SetUpFiles[typeof(T).FullName] = null;
             }
         }
     }
