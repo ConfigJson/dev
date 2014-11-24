@@ -59,7 +59,11 @@ namespace ConfigJsonNET.ConfigurationHelper
             var firstActiveConfig = GetFirstActiveConfig<T>();
             AppConfigLocation = firstActiveConfig.FileName;
 
-            if (string.IsNullOrEmpty(firstActiveConfig.BaseDir)) throw new Exception("MissingBase Dir");
+            //if (string.IsNullOrEmpty(firstActiveConfig.BaseDir)) throw new Exception("MissingBase Dir");
+            if (string.IsNullOrEmpty(firstActiveConfig.BaseDir))
+            {
+                firstActiveConfig.BaseDir = AppDomain.CurrentDomain.BaseDirectory;
+            }
             if (string.IsNullOrEmpty(AppConfigLocation)) throw new Exception("Name missing from active configuration");
 
             AppConfigLocation = firstActiveConfig.FileName;
